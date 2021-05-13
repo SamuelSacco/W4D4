@@ -1,3 +1,6 @@
+
+class PlacementError < ArgumentError
+
 class Stack 
     attr_reader :disks
     attr_accessor :sticks
@@ -9,11 +12,23 @@ class Stack
     end
 
     def place_disks
-        disks.each do |disk|
-            sticks[0] << disk
-        end
+        sticks[0] += disks
     end
 
+    def valid_take?(n)
+        raise PlacementError 
+        return false if @sticks[n].empty?
+        true 
+    end
+
+    def valid_place?(n, disk)
+        return false if sticks[n][0] > disk
+        true
+    end
+
+    def valid_move?(take, place, disk)
+        take != place && valid_take?(take) && valid_place?(place,disk)
+    end
     # def render
     #     length = sticks.map(&:length).max
     #     output = []
@@ -33,6 +48,8 @@ class Stack
     #     end
     #     # output
     # end
+
+
 end
 
 # stack = Stack.new("five")
