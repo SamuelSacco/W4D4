@@ -1,6 +1,3 @@
-
-class PlacementError < ArgumentError
-
 class Stack 
     attr_reader :disks
     attr_accessor :sticks
@@ -15,8 +12,11 @@ class Stack
         sticks[0] += disks
     end
 
+    def take(n)
+        sticks[n].shift
+    end
+
     def valid_take?(n)
-        raise PlacementError 
         return false if @sticks[n].empty?
         true 
     end
